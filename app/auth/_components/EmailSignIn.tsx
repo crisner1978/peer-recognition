@@ -9,6 +9,9 @@ interface EmailSignInProps {
   setEmail: Dispatch<SetStateAction<string>>
   onSuccess?: () => void
 }
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+
 const EmailSignIn = ({ setEmail, onSuccess }: EmailSignInProps) => {
   const emailRef = useRef<HTMLInputElement | null>(null)
   const [isSubmitting, setSubmitting] = useState(false)
@@ -16,16 +19,20 @@ const EmailSignIn = ({ setEmail, onSuccess }: EmailSignInProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!emailRef.current?.value) return toast.error('Please enter your email address')
+    if (!emailRegex.test(emailRef?.current?.value as string))
+      return toast.error('Please enter your email address')
+      
+    const email = emailRef?.current?.value as string
+
+    if (!email?.endsWith('@yourlandmark.com')) return toast.error('Please enter your work email')
+
     setSubmitting(true)
-    const email = emailRef.current.value
     setEmail(email)
     const toastId = toast.loading('Just a moment!')
 
     try {
       supabase.auth.signInWithOtp({
         email,
-
         options: { emailRedirectTo: `${location.origin}/auth/callback`, shouldCreateUser: true },
       })
       onSuccess?.()

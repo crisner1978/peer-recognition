@@ -17,10 +17,6 @@ const Navbar = () => {
 
   useEffect(() => {
     supabase.auth.getUser().then((d) => {
-      console.log(
-        'adminEmails?.includes(d?.data?.user?.email',
-        adminEmails?.includes(d?.data?.user?.email!)
-      )
       if (adminEmails?.includes(d?.data?.user?.email! as string)) {
         setShowLeaderboard(true)
       } else {

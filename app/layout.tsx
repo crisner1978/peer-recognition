@@ -2,11 +2,13 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { Metadata } from 'next'
 import { Inter as FontSans, Montserrat } from 'next/font/google'
 import { cookies } from 'next/headers'
+import { Toaster } from 'react-hot-toast'
 import RecoilProvider from './atoms/RecoilProvider'
 import Login from './auth/_components/Login'
 import './globals.css'
 import SupabaseProvider from './supabase/supabase-provider'
 import Navbar from './_components/Navbar'
+import { toastStyles } from './_lib/toastStyles'
 import { cn } from './_utils'
 
 export const fontSans = FontSans({
@@ -51,6 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Login />
               )}
             </main>
+            <Toaster toastOptions={toastStyles} position='top-right' />
           </body>
         </html>
       </RecoilProvider>
