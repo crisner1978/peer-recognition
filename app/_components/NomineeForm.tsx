@@ -18,7 +18,7 @@ const NomineeForm = ({ user, nominees, isSuccess, votedFor }: NomineeFormProps) 
     register,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm()
 
   const watchNominee = watch('nominee')
@@ -40,7 +40,7 @@ const NomineeForm = ({ user, nominees, isSuccess, votedFor }: NomineeFormProps) 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset>
+      <fieldset disabled={isSubmitting || isSubmitSuccessful}>
         <div className='w-full sm:max-w-[400px] mx-auto'>
           <SelectMenu
             options={nominees}

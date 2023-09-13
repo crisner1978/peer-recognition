@@ -21,7 +21,7 @@ const EmailSignIn = ({ setEmail, onSuccess }: EmailSignInProps) => {
     e.preventDefault()
     if (!emailRegex.test(emailRef?.current?.value as string))
       return toast.error('Please enter your email address')
-      
+
     const email = emailRef?.current?.value as string
 
     if (!email?.endsWith('@yourlandmark.com')) return toast.error('Please enter your work email')
